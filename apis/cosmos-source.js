@@ -169,9 +169,9 @@ export default class CosmosAPI {
       signedBlocksWindow,
     ] = await Promise.all([
       Promise.all([
-        this.query(`staking/validators?status=unbonding`),
-        this.query(`staking/validators?status=bonded`),
-        this.query(`staking/validators?status=unbonded`),
+        this.query(`staking/validators?status=BOND_STATUS_UNBONDING`),
+        this.query(`staking/validators?status=BOND_STATUS_BONDED`),
+        this.query(`staking/validators?status=BOND_STATUS_UNBONDED`),
       ]).then((validatorGroups) => [].concat(...validatorGroups)),
       this.getAnnualProvision().catch(() => undefined),
       this.getValidatorSet(height),
@@ -193,7 +193,10 @@ export default class CosmosAPI {
 
     validators.forEach((validator) => {
       const consensusAddress = pubkeyToAddress(
-        validator.consensus_pubkey,
+        {
+          value: validator.consensus_pubkey.value,
+          type: 'tendermint/PubKeyEd25519',
+        },
         network.validatorConsensusaddressPrefix
       )
       validator.votingPower = consensusValidators[consensusAddress]
