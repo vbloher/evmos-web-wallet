@@ -412,9 +412,12 @@ export default class CosmosAPI {
       this.network.stakingDenom,
       'viewDenom'
     ).chainDenom
-    const communityPool = communityPoolArray.find(
+    const communityPoolStakingCoin = communityPoolArray.find(
       ({ denom }) => denom === stakingChainDenom
-    ).amount
+    )
+    const communityPool = communityPoolStakingCoin
+      ? communityPoolStakingCoin.amount
+      : 0
     return {
       totalStakedAssets: setDecimalLength(
         reducers.getStakingCoinViewAmount(totalBondedTokens),

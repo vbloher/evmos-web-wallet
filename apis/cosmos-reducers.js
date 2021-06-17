@@ -5,6 +5,11 @@ import { getProposalSummary } from '~/common/common-reducers'
 import { lunieMessageTypes } from '~/common/lunie-message-types'
 import network from '~/common/network'
 
+function getLog(logs, messageIndex) {
+  return logs[messageIndex]
+  // return logs.find(({ msg_index: msgIndex }) => msgIndex === messageIndex)
+}
+
 function proposalBeginTime(proposal) {
   const status = getProposalStatus(proposal)
   switch (status) {
@@ -46,6 +51,9 @@ export function getStakingCoinViewAmount(chainStakeAmount) {
 }
 
 export function coinReducer(chainCoin, ibcInfo) {
+  if (typeof ibcInfo === 'number') {
+    ibcInfo = undefined
+  }
   const chainDenom = ibcInfo ? ibcInfo.denom : chainCoin.denom
   const coinLookup = network.getCoinLookup(chainDenom)
   const sourceChain = ibcInfo ? ibcInfo.chainTrace[0] : undefined
@@ -392,7 +400,7 @@ export function claimRewardsAmountReducer(transaction) {
   // filter out unsuccessful messages
   if (transaction.logs) {
     transaction.logs.forEach((log, index) => {
-      if (log.success !== true) {
+      if (!log.events) {
         transactionClaimEvents.splice(index, 1)
       }
     })
@@ -570,10 +578,8 @@ export function transactionReducer(transaction) {
         return coinReducer(fee, coinLookup)
       })
     }
-    const {
-      claimMessages,
-      otherMessages,
-    } = transaction.tx.body.messages.reduce(
+    console.log(transaction)
+    const { claimMessages, otherMessages } = transaction.tx.value.msg.reduce(
       ({ claimMessages, otherMessages }, message) => {
         // we need to aggregate all withdraws as we display them together in one transaction
         if (getMessageType(message.type) === lunieMessageTypes.CLAIM_REWARDS) {
@@ -608,14 +614,12 @@ export function transactionReducer(transaction) {
           transaction
         ),
         timestamp: transaction.timestamp,
-        memo: transaction.tx.body.memo,
+        memo: transaction.tx.value.memo,
         fees,
         success: setTransactionSuccess(transaction, messageIndex),
         log: getTransactionLogs(transaction, messageIndex),
         involvedAddresses: extractInvolvedAddresses(
-          transaction.logs.find(
-            ({ msg_index: msgIndex }) => msgIndex === messageIndex
-          ).events
+          getLog(transaction.logs, messageIndex).events
         ),
         rawMessage: {
           type,
