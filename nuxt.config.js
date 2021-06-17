@@ -62,6 +62,10 @@ export default {
     'cookie-universal-nuxt',
   ],
 
+  eslint: {
+    cache: false,
+  },
+
   // Axios module configuration (https://go.nuxtjs.dev/config-axios)
   axios: {
     progress: false,
