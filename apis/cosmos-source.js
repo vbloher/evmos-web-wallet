@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 import { keyBy, orderBy, take, reverse, sortBy, chunk } from 'lodash'
+import { pubkeyToAddress } from '@cosmjs/launchpad'
 import * as reducers from './cosmos-reducers'
-import { encodeB32, decodeB32, pubkeyToAddress } from '~/common/address'
+import { encodeB32, decodeB32 } from '~/common/address'
 import { setDecimalLength } from '~/common/numbers'
 import network from '~/common/network'
 
@@ -412,11 +413,11 @@ export default class CosmosAPI {
       this.network.stakingDenom,
       'viewDenom'
     ).chainDenom
-    const communityPoolStakingCoin = communityPoolArray.find(
+    const stakingCoinCommunityPool = communityPoolArray.find(
       ({ denom }) => denom === stakingChainDenom
     )
-    const communityPool = communityPoolStakingCoin
-      ? communityPoolStakingCoin.amount
+    const communityPool = stakingCoinCommunityPool
+      ? stakingCoinCommunityPool.amount
       : 0
     return {
       totalStakedAssets: setDecimalLength(

@@ -107,7 +107,9 @@ export default {
       return this.fees.map(({ denom }) => ({ key: denom, value: denom }))
     },
     selectedFee() {
-      return this.fees.find(({ denom }) => denom === this.feeDenom)
+      return (
+        this.fees.find(({ denom }) => denom === this.feeDenom) || this.fees[0]
+      )
     },
     totals() {
       return this.amounts.concat(this.selectedFee).reduce((all, amount) => {
