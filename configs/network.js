@@ -4,8 +4,8 @@ export default {
   description: 'Agoric is a cryptoeconomy with JS smart contracts.',
   logo: `logo.svg`,
   website: 'https://agoric.com',
-  apiURL: 'http://@API@', // use `npx lcp --proxyUrl http://34.123.30.100:1317`
-  rpcURL: 'ws://@RPC@',
+  apiURL: 'https://@NETWORK@.api.agoric.net', // use `npx lcp --proxyUrl http://34.123.30.100:1317`
+  rpcURL: 'wss://@NETWORK@.rpc.agoric.net',
   stakingDenom: 'BLD',
   coinLookup: [
     {

@@ -2,7 +2,6 @@
 
 import { promises as fs } from 'fs'
 import { spawnSync } from 'child_process'
-import fetch from 'node-fetch'
 
 let argi = 2
 const GENERATE = process.argv[argi] === '--generate'
@@ -38,18 +37,7 @@ const doConfig = async (NETWORK_CONFIG) => {
   console.log('configuring', NETWORK_CONFIG)
   const hostname = new URL(NETWORK_CONFIG).hostname
   const NETWORK = hostname.split('.')[0]
-  const res = await fetch(NETWORK_CONFIG)
-  const nc = await res.json()
-  // console.log(NETWORK, nc)
-
-  let RPC
-  if (NETWORK !== hostname) {
-    RPC = `rpc.${NETWORK}.agoric.net:26657`
-  } else {
-    RPC = nc.rpcAddrs[Math.floor(Math.random() * nc.rpcAddrs.length)]
-  }
-
-  const API = RPC.replace(/(:\d+)?$/, ':1317')
+  // console.log(NETWORK)
 
   const dir = 'configs'
   const files = await recursiveFiles(dir)
@@ -63,8 +51,6 @@ const doConfig = async (NETWORK_CONFIG) => {
           /@NETWORK_NAME@/g,
           `${NETWORK[0].toUpperCase()}${NETWORK.slice(1)}`
         )
-        .replace(/@API@/g, API)
-        .replace(/@RPC@/g, RPC)
       console.log('creating', outp)
       await fs.writeFile(outp, newContent)
     })
