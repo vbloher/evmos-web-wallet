@@ -5,14 +5,14 @@
   for = "/*"
   [headers.values]
     Content-Security-Policy = '''
-      default-src 'self' https://stage.staking.agoric.app;
-      connect-src 'self' data: https://keybase.io https://rpc.stage.agoric.net;
-      img-src 'self' data: https://stage.staking.agoric.app;
-      script-src 'self' 'unsafe-eval' https://stage.staking.agoric.app;
-      style-src 'self' 'unsafe-inline' https://stage.staking.agoric.app;
-      media-src 'self' https://stage.staking.agoric.app blob:;
-      object-src 'self' data: blob: https://stage.staking.agoric.app;
-      manifest-src 'self' https://stage.staking.agoric.app;
+      default-src 'self' https://@NETWORK@.staking.agoric.app;
+      connect-src 'self' data: https://keybase.io https://rpc.@NETWORK@.agoric.net;
+      img-src 'self' data: https://@NETWORK@.staking.agoric.app;
+      script-src 'self' 'unsafe-eval' https://@NETWORK@.staking.agoric.app;
+      style-src 'self' 'unsafe-inline' https://@NETWORK@.staking.agoric.app;
+      media-src 'self' https://@NETWORK@.staking.agoric.app blob:;
+      object-src 'self' data: blob: https://@NETWORK@.staking.agoric.app;
+      manifest-src 'self' https://@NETWORK@.staking.agoric.app;
       worker-src 'self';
       frame-src 'self';
       frame-ancestors 'self';
