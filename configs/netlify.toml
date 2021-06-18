@@ -6,9 +6,9 @@
   [headers.values]
     Content-Security-Policy = '''
       default-src 'self' https://@NETWORK@.staking.agoric.app;
-      connect-src 'self' data: https://keybase.io https://rpc.@NETWORK@.agoric.net;
+      connect-src 'self' data: https://keybase.io https://@RPC@ http://@API@;
       img-src 'self' data: https://@NETWORK@.staking.agoric.app;
-      script-src 'self' 'unsafe-eval' https://@NETWORK@.staking.agoric.app;
+      script-src 'self' 'unsafe-eval' 'unsafe-inline' https://@NETWORK@.staking.agoric.app;
       style-src 'self' 'unsafe-inline' https://@NETWORK@.staking.agoric.app;
       media-src 'self' https://@NETWORK@.staking.agoric.app blob:;
       object-src 'self' data: blob: https://@NETWORK@.staking.agoric.app;
@@ -19,7 +19,6 @@
       base-uri 'self';
       form-action 'self';
       font-src 'self' data:;
-      upgrade-insecure-requests;
     '''
     X-Frame-Options = "DENY"
     X-XSS-Protection = "1; mode=block"
