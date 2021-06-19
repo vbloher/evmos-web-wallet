@@ -578,7 +578,6 @@ export function transactionReducer(transaction) {
         return coinReducer(fee, coinLookup)
       })
     }
-    console.log(transaction)
     const { claimMessages, otherMessages } = transaction.tx.value.msg.reduce(
       ({ claimMessages, otherMessages }, message) => {
         // we need to aggregate all withdraws as we display them together in one transaction

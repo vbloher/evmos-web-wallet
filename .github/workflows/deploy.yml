@@ -1,0 +1,77 @@
+# cribbed from deploy1.yml from dapp-card-store
+# TODO: cache node modules?
+
+name: Deploy Lunie Light
+
+# run CI on pushes to Agoric, and on all PRs (even the ones that target other
+# branches)
+
+on:
+  push:
+    branches: [ Agoric ]
+  pull_request:
+
+jobs:
+  # Build everything we can and share in a cache.
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: Check out lunie
+      uses: actions/checkout@v2
+
+    - name: yarn install
+      run: yarn install
+
+    - name: cache build outputs
+      uses: actions/cache@v1
+      with:
+        path: .
+        key: ${{ runner.os }}-14.x-built-${{ github.sha }}
+    
+
+#  get-deployments:
+#    runs-on: ubuntu-latest
+#    steps:
+#    - uses: actions/checkout@v2
+#      with:
+#        path: dapp
+#    - id: set-deployments
+#      # Get only the directories present in dapp/ui/deploy
+#      run: echo "::set-output name=deployments::$(ls -d dapp/ui/deploy/*/ | jq -R -s -c 'split("/\n")[:-1]')"
+#    outputs:
+#      deployments: ${{ steps.set-deployments.outputs.deployments }}
+
+  deploy:
+    needs: deps
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        deployment: [stage, testnet, devnet]
+    steps:
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 14.x
+    - name: restore built files
+      uses: actions/cache@v1
+      with:
+        path: .
+        key: ${{ runner.os }}-14.x-built-${{ github.sha }}
+
+    - name: Configure lunie
+      run: |
+        echo "NETLIFY_SITE_ID=$(cat "deploys/${{ matrix.deployment }}/NETLIFY_SITE_ID")" >> $GITHUB_ENV
+        yarn config-and-generate https://${{ matrix.deployment }}.agoric.net/network-config
+
+    - name: Deploy via Netlify
+      uses: nwtgck/actions-netlify@v1.1
+      with:
+        # Production deployment if a commit to Agoric.
+        production-deploy: ${{ github.ref == 'refs/heads/Agoric' }}
+        publish-dir: dist
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+        netlify-config-path: ./netlify.toml
+      env:
+        NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
