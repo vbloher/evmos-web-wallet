@@ -2,7 +2,7 @@ export default {
   id: 'cosmos-hub-testnet', // DEPRECATE, only used for Lunie extension, NOT CHAIN ID
   name: 'Agoric Stage',
   description: 'Agoric is a cryptoeconomy with JS smart contracts.',
-  logo: `logo.svg`,
+  logo: `homescreen400.png`,
   website: 'https://agoric.com',
   apiURL: 'https://stage.api.agoric.net', // use `npx lcp --proxyUrl http://34.123.30.100:1317`
   rpcURL: 'wss://stage.rpc.agoric.net',
