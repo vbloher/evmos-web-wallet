@@ -1,43 +1,37 @@
 export default {
-  id: 'cosmos-hub-testnet', // DEPRECATE, only used for Lunie extension, NOT CHAIN ID
-  name: 'Agoric Stage',
-  description: 'Agoric is a cryptoeconomy with JS smart contracts.',
-  logo: `homescreen400.png`,
-  website: 'https://agoric.com',
-  apiURL: 'https://stage.api.agoric.net', // use `npx lcp --proxyUrl http://34.123.30.100:1317`
-  rpcURL: 'wss://stage.rpc.agoric.net',
-  stakingDenom: 'BLD',
+  id: 'evmos-testnet', // DEPRECATE, only used for Lunie extension, NOT CHAIN ID
+  name: 'Evmos web wallet',
+  description: 'Evmos web wallet',
+  logo: `logo.svg`,
+  website: 'https://evmos.org/',
+  apiURL: 'http://207.180.203.158:1317', // use `npx lcp --proxyUrl http://89.163.223.151:1317`
+  rpcURL: 'ws://207.180.203.158:26657',
+  stakingDenom: 'photon',
   coinLookup: [
     {
-      viewDenom: 'BLD',
-      chainDenom: 'ubld',
+      viewDenom: 'photon',
+      chainDenom: 'aphoton',
       chainToViewConversionFactor: 1e-6,
-      icon: `/currencies/bld.png`,
-    },
-    {
-      viewDenom: 'RUN',
-      chainDenom: 'urun',
-      chainToViewConversionFactor: 1e-6,
-      icon: `/currencies/run.png`,
+      icon: `currencies/evmos.png`,
     },
   ],
-  addressPrefix: 'agoric',
-  validatorAddressPrefix: 'agoricvaloper',
-  validatorConsensusaddressPrefix: 'agoricvalcons', // needed to map validators from staking queries to the validator set
-  HDPath: `m/44'/564'/0'/0/0`,
-  lockUpPeriod: `21 days`,
+  addressPrefix: 'evmos',
+  validatorAddressPrefix: 'evmosvaloper',
+  validatorConsensusaddressPrefix: 'evmosvalcons', // needed to map validators from staking queries to the validator set
+  HDPath: `m/44'/118'/0'/0/0`,
+  lockUpPeriod: `3 days`,
   fees: {
     default: {
       gasEstimate: 350000,
       feeOptions: [
         {
-          denom: 'RUN',
-          amount: 0.001,
+          denom: 'aphoton',
+          amount: 50000,
         },
       ],
     },
   },
-  icon: `/favicon.png`,
+  icon: `currencies/evmos.png`,
 
   // This is only to be used as a developer tool and for testing purposes
   // NEVER ENABLE LOCALSIGNING IN PRODUCTION OR FOR MAINNETS
