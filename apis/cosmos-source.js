@@ -226,11 +226,11 @@ export default class CosmosAPI {
       tallyingParameters,
       depositParameters,
     ] = await Promise.all([
-      this.query(`/gov/proposals/${proposal.id}/votes`),
-      this.query(`/gov/proposals/${proposal.id}/deposits`),
-      this.query(`/gov/proposals/${proposal.id}/tally`),
-      this.query(`/gov/parameters/tallying`),
-      this.query(`/gov/parameters/deposit`),
+      this.query(`/cosmos/gov/v1beta1/proposals/${proposal.id}/votes`),
+      this.query(`/cosmos/gov/v1beta1/proposals/${proposal.id}/deposits`),
+      this.query(`/cosmos/gov/v1beta1/proposals/${proposal.id}/tally`),
+      this.query(`/cosmos/gov/v1beta1/params/tallying`),
+      this.query(`/cosmos/gov/v1beta1/params/deposit`),
     ])
     const totalVotingParticipation = BigNumber(tally.yes)
       .plus(tally.abstain)
@@ -311,14 +311,14 @@ export default class CosmosAPI {
       proposal.voting_end_time !== GOLANG_NULL_TIME &&
       new Date(firstBlock.time) > new Date(proposal.voting_end_time)
     if (!proposalIsFromPastChain) {
-      proposer = await this.query(`gov/proposals/${proposal.id}/proposer`)
+      proposer = await this.query(`/cosmos/tx/v1beta1/txs/${proposal.hash}`)
     }
     return proposer
   }
 
   async getProposalMetaData(proposal, firstBlock) {
     const [tally, detailedVotes, proposer] = await Promise.all([
-      this.query(`gov/proposals/${proposal.id}/tally`),
+      this.query(`/cosmos/gov/v1beta1/proposals/${proposal.id}/tally`),
       this.getDetailedVotes(proposal),
       this.getProposer(proposal, firstBlock),
     ])
@@ -332,9 +332,9 @@ export default class CosmosAPI {
       firstBlock,
       { bonded_tokens: totalBondedTokens },
     ] = await Promise.all([
-      this.query('gov/proposals'),
+      this.query('/cosmos/gov/v1beta1/proposals'),
       this.getBlock(1),
-      this.query('/staking/pool'),
+      this.query('/cosmos/staking/v1beta1/pool'),
     ])
     if (!Array.isArray(proposalsResponse)) return []
     const proposals = await Promise.all(
