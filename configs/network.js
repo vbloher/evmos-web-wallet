@@ -37,7 +37,7 @@ export default {
       ],
     },
   },
-  icon: `/favicon.png`,
+  icon: `/favicon.ico`,
 
   // This is only to be used as a developer tool and for testing purposes
   // NEVER ENABLE LOCALSIGNING IN PRODUCTION OR FOR MAINNETS

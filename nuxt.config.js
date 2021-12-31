@@ -24,7 +24,7 @@ export default {
         content: 'Evmos web wallet',
       },
     ],
-    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
+    link: [{ rel: 'icon', type: 'image/png', href: '/favicon.ico' }],
   },
 
   // Global CSS (https://go.nuxtjs.dev/config-css)
