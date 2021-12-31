@@ -11,7 +11,7 @@ export default {
 
   // Global page headers (https://go.nuxtjs.dev/config-head)
   head: {
-    title: 'Lunie 3',
+    title: 'Evmos web wallet',
     htmlAttrs: {
       lang: 'en',
     },
@@ -21,8 +21,7 @@ export default {
       {
         hid: 'description',
         name: 'description',
-        content:
-          'Lunie 3 is a simple staking and governance interface for proof-of-stake blockchains',
+        content: 'Evmos web wallet',
       },
     ],
     link: [{ rel: 'icon', type: 'image/png', href: '/favicon.png' }],
