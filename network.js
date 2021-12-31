@@ -11,7 +11,7 @@ export default {
     {
       viewDenom: 'photon',
       chainDenom: 'aphoton',
-      chainToViewConversionFactor: 1e-6,
+      chainToViewConversionFactor: 1e-12,
       icon: `currencies/evmos.png`,
     },
   ],
