@@ -135,9 +135,7 @@ function lunieCoinToKeplrCoin(denom) {
     // Actual denom (i.e. uatom, uscrt) used by the blockchain.
     coinMinimalDenom: coinLookup.chainDenom,
     // # of decimal points to convert minimal denomination to user-facing denomination.
-    coinDecimals: coinLookup.chainToViewConversionFactor
-      .toString()
-      .split('.')[1].length,
+    coinDecimals: coinLookup.coinDecimals,
     // (Optional) Keplr can show the fiat value of the coin if a coingecko id is provided.
     // You can get id from https://api.coingecko.com/api/v3/coins/list if it is listed.
     // coinGeckoId: ""

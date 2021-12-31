@@ -11,7 +11,8 @@ export default {
     {
       viewDenom: 'photon',
       chainDenom: 'aphoton',
-      chainToViewConversionFactor: 1e-12,
+      chainToViewConversionFactor: 1e-18,
+      coinDecimals: 18, // for keplr
       icon: `currencies/evmos.png`,
     },
   ],
